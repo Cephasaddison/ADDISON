@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bank Account Application</title>
+  <style>
+    :root{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;max-width:40rem;margin:1.5rem auto;padding:0 1rem}
+    body{color:#111}
+    form{display:grid;gap:.75rem}
+    label{display:block;font-weight:600;margin-bottom:.25rem}
+    input,select,textarea{padding:.5rem;border:1px solid #bbb;border-radius:6px;width:100%}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .small{font-size:.9rem;color:#555}
+    .actions{display:flex;gap:.5rem;align-items:center;margin-top:.75rem}
+    button{padding:.6rem 1rem;border-radius:8px;border:0;background:#0366d6;color:#fff;cursor:pointer}
+    button[disabled]{opacity:.5;cursor:not-allowed}
+    .error{color:#b00020;font-size:.9rem}
+    .file-help{font-size:.85rem;color:#555}
+    .success{color:green;font-weight:700}
+    .note{font-size:.85rem;color:#444}
+    progress{width:100%;height:0.6rem}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Open a Bank Account</h1>
+    <p class="note">Fields marked with * are required. This page uses client-side validation only — you must implement secure server-side handling.</p>
+
+    <form id="accountForm" novalidate>
+      <div>
+        <label for="title">Title</label>
+        <select id="title" name="title" required>
+          <option value="">Select...</option>
+          <option>Mr</option>
+          <option>Mrs</option>
+          <option>Ms</option>
+          <option>Dr</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="firstName">First name *</label>
+          <input id="firstName" name="firstName" type="text" required minlength="2" />
+        </div>
+        <div>
+          <label for="lastName">Last name *</label>
+          <input id="lastName" name="lastName" type="text" required minlength="2" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="dob">Date of birth *</label>
+          <input id="dob" name="dob" type="date" required />
+        </div>
+        <div>
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender">
+            <option value="">Prefer not to say</option>
+            <option>Female</option>
+            <option>Male</option>
+            <option>Non-binary</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="email">Email *</label>
+        <input id="email" name="email" type="email" required />
+      </div>
+
+      <div>
+        <label for="phone">Phone number *</label>
+        <input id="phone" name="phone" type="tel" pattern="^[0-9+() -]{7,}$" placeholder="+233 20 123 4567" required />
+        <div class="small">Enter international format if possible.</div>
+      </div>
+
+      <div>
+        <label for="address">Residential address *</label>
+        <textarea id="address" name="address" rows="2" required></textarea>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="nationality">Nationality *</label>
+          <input id="nationality" name="nationality" type="text" required />
+        </div>
+        <div>
+          <label for="idType">ID type *</label>
+          <select id="idType" name="idType" required>
+            <option value="">Select...</option>
+            <option>National ID</option>
+            <option>Passport</option>
+            <option>Driver's License</option>
+            <option>Voter ID</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="idNumber">ID number *</label>
+        <input id="idNumber" name="idNumber" type="text" required />
+      </div>
+
+      <div>
+        <label for="idUpload">Upload ID (image or PDF) *</label>
+        <input id="idUpload" name="idUpload" type="file" accept="image/*,.pdf" required />
+        <div class="file-help">Max 10 MB recommended.</div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="occupation">Occupation</label>
+          <input id="occupation" name="occupation" type="text" />
+        </div>
+        <div>
+          <label for="income">Monthly income (optional)</label>
+          <input id="income" name="income" type="number" min="0" step="0.01" placeholder="0.00" />
+        </div>
+      </div>
+
+      <div>
+        <label for="accountType">Account type *</label>
+        <select id="accountType" name="accountType" required>
+          <option value="">Select...</option>
+          <option>Checking / Current</option>
+          <option>Savings</option>
+          <option>Fixed Deposit</option>
+          <option>Student</option>
+          <option>Business</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="initialDeposit">Initial deposit (local currency) *</label>
+          <input id="initialDeposit" name="initialDeposit" type="number" required min="0" step="0.01" />
+        </div>
+        <div>
+          <label for="currency">Currency</label>
+          <select id="currency" name="currency">
+            <option>GHS</option>
+            <option>USD</option>
+            <option>EUR</option>
+            <option>GBP</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="username">Choose username *</label>
+        <input id="username" name="username" type="text" required minlength="4" />
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="password">Password *</label>
+          <input id="password" name="password" type="password" required minlength="8" />
+        </div>
+        <div>
+          <label for="confirmPassword">Confirm password *</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" required minlength="8" />
+        </div>
+      </div>
+
+      <label for="pin">4-digit transaction PIN (optional)</label>
+      <input id="pin" name="pin" type="password" inputmode="numeric" pattern="^\d{4}$" maxlength="4" placeholder="1234" />
+
+      <div>
+        <label for="terms">
+          <input id="terms" name="terms" type="checkbox" required /> I confirm that the information is correct and I accept the <a href="#" target="_blank">terms & conditions</a>. *
+        </label>
+      </div>
+
+      <div id="formError" class="error" role="alert" aria-live="polite"></div>
+      <div class="actions">
+        <button id="submitBtn" type="submit">Submit application</button>
+        <div id="status" class="small"></div>
+      </div>
+    </form>
+
+    <template id="successTemplate">
+      <div class="success">Application submitted successfully (client-side). Server must confirm account creation.</div>
+    </template>
+  </main>
+
+  <script>
+    (function(){
+      const form = document.getElementById('accountForm');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const formError = document.getElementById('formError');
+      const submitBtn = document.getElementById('submitBtn');
+      const status = document.getElementById('status');
+
+      function showError(msg){
+        formError.textContent = msg;
+      }
+      function clearError(){ formError.textContent = ''; }
+
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        clearError();
+
+        // built-in HTML validity
+        if(!form.checkValidity()){
+          showError('Please fill the required fields correctly.');
+          form.reportValidity();
+          return;
+        }
+
+        // password match
+        if(password.value !== confirmPassword.value){
+          showError('Passwords do not match.');
+          return;
+        }
+
+        // pin pattern (if provided)
+        const pin = document.getElementById('pin').value;
+        if(pin && !/^\d{4}$/.test(pin)){
+          showError('PIN must be exactly 4 digits.');
+          return;
+        }
+
+        // initial deposit check (example: some account types require a minimum)
+        const acctType = document.getElementById('accountType').value;
+        const deposit = parseFloat(document.getElementById('initialDeposit').value) || 0;
+        if(acctType === 'Savings' && deposit < 10){
+          showError('Savings accounts require at least 10 (currency units) as initial deposit.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        status.textContent = 'Preparing submission...';
+
+        try{
+          // gather form data
+          const data = new FormData(form);
+
+          // Example: if you want to send JSON and file separately, convert fields:
+          const payload = {};
+          data.forEach((v,k) => {
+            // Convert File -> keep handle separate
+            if(v instanceof File) return;
+            payload[k] = v;
+          });
+
+          // Example fetch: send JSON and then a separate upload for file (adapt to your API)
+          // NOTE: Replace '/api/create-account' with your secure server endpoint.
+          status.textContent = 'Sending application...';
+
+          const response = await fetch('/api/create-account', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if(!response.ok){
+            // server returned an error (example)
+            const text = await response.text();
+            throw new Error(text || 'Server error');
+          }
+
+          // Optionally upload ID file (if server expects multipart or separate upload)
+          const idFile = document.getElementById('idUpload').files[0];
+          if(idFile){
+            // Example separate upload endpoint
+            const fileForm = new FormData();
+            fileForm.append('idFile', idFile, idFile.name);
+            // adjust endpoint as needed:
+            await fetch('/api/upload-id', { method: 'POST', body: fileForm });
+          }
+
+          // show success (client-side)
+          const tpl = document.getElementById('successTemplate').content.cloneNode(true);
+          form.replaceWith(tpl);
+        } catch(err){
+          console.error(err);
+          showError('Submission failed: ' + (err.message || 'Unknown error'));
+          submitBtn.disabled = false;
+          status.textContent = '';
+        }
+      });
+
+      // optional: simple password strength indicator (visual)
+      password.addEventListener('input', () => {
+        const val = password.value;
+        let score = 0;
+        if(val.length >= 8) score++;
+        if(/[A-Z]/.test(val)) score++;
+        if(/[a-z]/.test(val)) score++;
+        if(/[0-9]/.test(val)) score++;
+        if(/[^A-Za-z0-9]/.test(val)) score++;
+        // show progress in #status temporarily
+        status.textContent = ['weak','fair','okay','good','strong'][Math.min(score-1,4)] || '';
+      });
+    })();
+  </script>
+</body>
+</html>
